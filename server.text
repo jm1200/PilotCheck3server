@@ -3,5 +3,11 @@ To run:
 2.) npm run watch - to build dist folder
 3.) npm run dev - to start dev server
 
+newly cloned repo:
+1.) npm install
+2.) make .env file and copy env variables
+3.) Redis-server troubleshoot: ps aux | grep redis   and then    kill -9 8821
+4.) npm run test
+
 TODO
 1. unhandled promise warning when postgres not running
