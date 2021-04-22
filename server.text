@@ -1,0 +1,7 @@
+To run:
+1.) redis-server
+2.) npm run watch - to build dist folder
+3.) npm run dev - to start dev server
+
+TODO
+1. unhandled promise warning when postgres not running
