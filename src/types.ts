@@ -17,3 +17,24 @@ export class EmailPasswordInput {
   @Field()
   password: string;
 }
+
+interface FolderContents {
+  folders: Folder[];
+  files: File[];
+}
+
+export interface Folder {
+  id: string;
+  title: string;
+  order: number;
+  open: boolean;
+  contents: FolderContents;
+  editable: boolean;
+}
+
+export interface File {
+  id: string;
+  title: string;
+  order: number;
+  xml: string;
+}

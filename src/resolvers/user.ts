@@ -13,6 +13,8 @@ import { MyContext, EmailPasswordInput } from "../types";
 import { validateRegister } from "../utils/validateRegister";
 import argon2 from "argon2";
 import { COOKIE_NAME } from "../utils/constants";
+import { Data } from "../entities/Data";
+import { defaultDirectories } from "../data/data";
 
 @ObjectType()
 class FieldError {
@@ -35,7 +37,7 @@ export class UserResponse {
 export class UserResolver extends BaseEntity {
   @Query(() => [User])
   async getUsers() {
-    return User.find();
+    return User.find({ relations: ["data"] });
   }
 
   @Query(() => User, { nullable: true })
@@ -63,9 +65,15 @@ export class UserResolver extends BaseEntity {
     let user;
 
     try {
+      let directories = await Data.create({
+        directories: JSON.stringify(defaultDirectories),
+      }).save();
+
       user = User.create({
         email: options.email,
         password: hashedPassword,
+        dataId: directories.id,
+        data: directories,
       });
 
       await user.save();

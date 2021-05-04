@@ -10,14 +10,16 @@ import connectRedis from "connect-redis";
 import cors from "cors";
 import { COOKIE_NAME, __prod__ } from "./utils/constants";
 import { createSchema } from "./utils/createSchema";
+import { Data } from "./entities/Data";
 
 const main = async () => {
+  console.log("test test test");
   const conn = createConnection({
     type: "postgres",
     url: process.env.DATABASE_URL,
     logging: true,
     synchronize: true,
-    entities: [User],
+    entities: [User, Data],
   });
 
   // (await conn).createQueryBuilder().delete().from(User).execute();

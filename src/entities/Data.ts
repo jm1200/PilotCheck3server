@@ -6,33 +6,18 @@ import {
   UpdateDateColumn,
   Column,
   BaseEntity,
-  JoinColumn,
-  OneToOne,
 } from "typeorm";
-import { Data } from "./Data";
 
 @ObjectType()
 @Entity()
-export class User extends BaseEntity {
+export class Data extends BaseEntity {
   @Field()
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Field()
-  @Column({ unique: true })
-  email: string;
-
-  @Column()
-  password: string;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Field()
   @Column()
-  dataId: string;
-
-  @Field(() => Data)
-  @OneToOne(() => Data, { onDelete: "CASCADE" })
-  @JoinColumn()
-  data: Data;
+  directories: string;
 
   @Field(() => String)
   @CreateDateColumn()
