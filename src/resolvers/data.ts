@@ -39,11 +39,11 @@ export class DataResolver extends BaseEntity {
     return user?.data;
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => Data)
   async setData(
     @Arg("directories") directories: string,
     @Ctx() { req }: MyContext
-  ) {
+  ): Promise<Data | null> {
     let userId = req.session.userId;
 
     if (!userId) {
@@ -54,15 +54,15 @@ export class DataResolver extends BaseEntity {
       if (user) {
         let dataId = user.dataId;
 
-        Data.update(dataId, { directories });
+        await Data.update(dataId, { directories });
 
-        return true;
+        return user.data;
       }
 
-      return false;
+      return null;
     } catch (error) {
       console.log("error setting data", error);
-      return false;
+      return null;
     }
   }
 
