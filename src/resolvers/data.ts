@@ -52,11 +52,11 @@ export class DataResolver extends BaseEntity {
     try {
       const user = await User.findOne(userId, { relations: ["data"] });
       if (user) {
-        let dataId = user.dataId;
+        let d = Data.create({ ...user.data, directories });
 
-        await Data.update(dataId, { directories });
+        await Data.update(d.id, d);
 
-        return user.data;
+        return d;
       }
 
       return null;

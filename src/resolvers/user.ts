@@ -47,7 +47,7 @@ export class UserResolver extends BaseEntity {
       return null;
     }
 
-    return User.findOne(req.session.userId);
+    return User.findOne(req.session.userId, { relations: ["data"] });
   }
 
   @Mutation(() => UserResponse)
@@ -72,7 +72,6 @@ export class UserResolver extends BaseEntity {
       user = User.create({
         email: options.email,
         password: hashedPassword,
-        dataId: directories.id,
         data: directories,
       });
 
@@ -109,7 +108,7 @@ export class UserResolver extends BaseEntity {
     @Arg("password") password: string,
     @Ctx() { req }: MyContext
   ): Promise<UserResponse> {
-    const user = await User.findOne({ where: { email: email } });
+    const user = await User.findOne({ where: { email }, relations: ["data"] });
 
     if (!user) {
       return {

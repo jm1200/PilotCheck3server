@@ -25,10 +25,6 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
-  @Field()
-  @Column()
-  dataId: string;
-
   @Field(() => Data)
   @OneToOne(() => Data, { onDelete: "CASCADE" })
   @JoinColumn()

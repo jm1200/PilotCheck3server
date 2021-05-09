@@ -18,11 +18,11 @@ const main = async () => {
     type: "postgres",
     url: process.env.DATABASE_URL,
     logging: true,
-    synchronize: true,
+    // synchronize: true,
     entities: [User, Data],
   });
 
-  // (await conn).createQueryBuilder().delete().from(User).execute();
+  (await conn).createQueryBuilder().delete().from(User).execute();
 
   const app = express();
   const RedisStore = connectRedis(session);
