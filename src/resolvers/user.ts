@@ -31,6 +31,9 @@ export class UserResponse {
 
   @Field(() => User, { nullable: true })
   user?: User;
+
+  @Field({ nullable: true })
+  sessionId?: string;
 }
 
 @Resolver()
@@ -100,7 +103,7 @@ export class UserResolver extends BaseEntity {
     }
 
     ctx.req.session.userId = user.id;
-    return { user };
+    return { user, sessionId: ctx.req.sessionID };
   }
   @Mutation(() => UserResponse)
   async login(
@@ -136,6 +139,7 @@ export class UserResolver extends BaseEntity {
 
     return {
       user,
+      sessionId: req.sessionID,
     };
   }
 

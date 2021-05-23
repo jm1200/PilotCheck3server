@@ -18,11 +18,11 @@ const main = async () => {
     type: "postgres",
     url: process.env.DATABASE_URL,
     logging: true,
-    // synchronize: true,
+    synchronize: true,
     entities: [User, Data],
   });
 
-  (await conn).createQueryBuilder().delete().from(User).execute();
+  // (await conn).createQueryBuilder().delete().from(User).execute();
 
   const app = express();
   const RedisStore = connectRedis(session);
@@ -58,7 +58,10 @@ const main = async () => {
 
   const apolloServer = new ApolloServer({
     schema: await createSchema(),
-    context: ({ req, res }) => ({ req, res }),
+    context: ({ req, res }) => {
+      console.log("index.tsx 62 req:", req.protocol);
+      return { req, res };
+    },
   });
 
   apolloServer.applyMiddleware({ app, cors: false });
